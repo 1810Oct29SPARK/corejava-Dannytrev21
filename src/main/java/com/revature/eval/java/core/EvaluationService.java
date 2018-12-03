@@ -570,16 +570,58 @@ public class EvaluationService {
 	 */
 	static class AtbashCipher {
 
-		/**
-		 * Question 13
-		 * 
-		 * @param string
-		 * @return
-		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
-		}
+            string = string.toLowerCase();
+            String reverseAlpha = "zyxwvutsrqponmlkjihgfedcba";
+            String alpha = "abcdefghijklmnopqrstuvwxyz";
+            String loweredString = string.replaceAll("[^a-z0-9]", "");
+            String cipheredString = "";
+            String buildString = "";
+
+            for (int i = 0; i < loweredString.length(); i++) {
+                char character = loweredString.charAt(i);
+                for (int j = 0; j < reverseAlpha.length(); j++) {
+                    if (j == 25 && character != alpha.charAt(j)) {
+                        buildString += character;
+                    }
+                    if (character == alpha.charAt(j)) {
+                        buildString += reverseAlpha.charAt(j);
+                        break;
+                    }
+
+                }
+            }
+            if (buildString.length() < 5) {
+                return buildString;
+            }
+            int lowIndex = 0;
+            int highIndex = 5;
+
+            for (int k = 0; k < buildString.length() / 5; k++) {
+
+                if (highIndex > buildString.length()) {
+                    highIndex = buildString.length();
+                }
+
+                if (buildString.length() == highIndex) {
+                    cipheredString += buildString.substring(lowIndex, highIndex);
+                    break;
+                }
+                cipheredString += buildString.substring(lowIndex, highIndex) + " ";
+
+                lowIndex += 5;
+                highIndex += 5;
+
+            }
+
+            // if buildString has length that is not multiple of 5, then concatenate the
+            // last bit of it.
+            if (buildString.length() % 5 != 0) {
+                cipheredString += buildString.substring(lowIndex, buildString.length());
+            }
+
+            return cipheredString;
+        }
 
 		/**
 		 * Question 14
@@ -588,8 +630,27 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			string = string.toLowerCase();0
+			String reverseAlpha = "zyxwvutsrqponmlkjihgfedcba"; 
+			
+			String alpha = "abcdefghijklmnopqrstuvwxyz";
+			String updateString = string.replaceAll("[^a-z0-9]", "");
+			String buildString = "";
+
+			for (int i = 0; i < updateString.length(); i++) {
+				char currentChar = updateString.charAt(i);
+				for (int j = 0; j < alpha.length(); j++) {
+					if (j == 25 && currentChar != alpha.charAt(j)) {
+						buildString += currentChar;
+					}
+					if (currentChar == alpha.charAt(j)) {
+						buildString += reverseAlpha.charAt(j);
+						break;
+					}
+
+				}
+			}
+			return buildString;
 		}
 	}
 
